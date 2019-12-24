@@ -1,0 +1,9 @@
+[package]
+name = "rustact"
+version = "0.1.0"
+authors = ["not_a_seagull <notaseagull048@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+thiserror = "1.0.9"
+wasm-bindgen = "0.2.56"
