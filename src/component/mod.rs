@@ -1,5 +1,5 @@
 /*
- * src/lib.rs
+ * src/component/mod.rs
  * Rustact - port of React to Rust
  *
  * Copyright (c) 2019, not_a_seagull
@@ -31,22 +31,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#![allow(dead_code)]
-#[macro_use]
-extern crate thiserror;
+use crate::{Props, ReactElement, Result, State};
 
-mod baseclasses;
-mod component;
-mod element;
-mod error;
-mod utils;
+pub trait Component<'a, TValue> {
+    fn get_props(&self) -> Props<'a, TValue>;
+    fn get_state(&self) -> State<TValue>;
+    fn render(&self) -> Result<ReactElement<'a, TValue>>;
 
-pub use baseclasses::{Props, State};
-pub use component::Component;
-pub use element::ReactElement;
-pub use error::Error;
-pub use utils::Result;
-
-pub mod prelude {
-    pub use super::{Error, Props, Result, State};
+    /// Set the state of the component
+    ///
+    /// # Parameters
+    ///
+    /// * `state_function` - A function that, given a state value, will return the desired state value for the component.
+    fn set_state<F>(&self, state_function: F)
+    where
+        F: Fn(State<TValue>) -> State<TValue>,
+    {
+        let _newState = state_function(self.get_state());
+    }
 }

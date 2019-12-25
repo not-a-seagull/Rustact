@@ -1,5 +1,5 @@
 /*
- * src/lib.rs
+ * src/baseclasses/state.rs
  * Rustact - port of React to Rust
  *
  * Copyright (c) 2019, not_a_seagull
@@ -31,22 +31,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#![allow(dead_code)]
-#[macro_use]
-extern crate thiserror;
+use std::collections::HashMap;
 
-mod baseclasses;
-mod component;
-mod element;
-mod error;
-mod utils;
+pub struct State<TValue> {
+    props: HashMap<String, TValue>,
+}
 
-pub use baseclasses::{Props, State};
-pub use component::Component;
-pub use element::ReactElement;
-pub use error::Error;
-pub use utils::Result;
+impl<TValue> State<TValue> {
+    pub fn get(&self, key: &str) -> Option<&TValue> {
+        self.props.get(key)
+    }
 
-pub mod prelude {
-    pub use super::{Error, Props, Result, State};
+    pub fn set(&mut self, key: String, value: TValue) {
+        self.props.insert(key, value);
+    }
 }
