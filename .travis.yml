@@ -7,8 +7,6 @@ os:
  - linux
  - osx
  - windows
-env:
- - RUST_BUILD=wasm-pack
 
 jobs:
   allow_failures:
@@ -16,16 +14,12 @@ jobs:
    - os: windows
   fast_finish: true
 
-cache: cargo
-
 before_script:
- - if [ "$RUST_BUILD" == "wasm-pack" ]; then curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh; fi 
  - rustup component add rustfmt
  - rustup component add clippy
 
 script:
  - rustfmt --check src/lib.rs
  - cargo clippy
- - $RUST_BUILD build
- - $RUST_BUILD test
+ - cargo test
  - if [ "$RUST_BUILD" == "cargo" ]; then cargo doc --test; fi
