@@ -31,12 +31,15 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#[macro_use]
+mod macros;
+
 use crate::{Props, ReactElement, Result, State};
 
-pub trait Component<'a, TValue> {
-    fn get_props(&self) -> Props<'a, TValue>;
-    fn get_state(&self) -> State<TValue>;
-    fn render(&self) -> Result<ReactElement<'a, TValue>>;
+pub trait Component<TValue> {
+    fn get_props(&self) -> &Props<TValue>;
+    fn get_state(&self) -> &State<TValue>;
+    fn render(&self) -> Result<ReactElement<TValue>>;
 
     /// Set the state of the component
     ///
@@ -45,8 +48,8 @@ pub trait Component<'a, TValue> {
     /// * `state_function` - A function that, given a state value, will return the desired state value for the component.
     fn set_state<F>(&self, state_function: F)
     where
-        F: Fn(State<TValue>) -> State<TValue>,
+        F: Fn(&State<TValue>) -> &State<TValue>,
     {
-        let _newState = state_function(self.get_state());
+        let _new_state = state_function(self.get_state());
     }
 }

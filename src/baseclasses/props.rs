@@ -35,12 +35,13 @@ use crate::ReactElement;
 use std::collections::HashMap;
 
 /// A list of properties passed into a Rustact Component
-pub struct Props<'a, TValue> {
-    pub children: Vec<ReactElement<'a, TValue>>,
+pub struct Props<TValue> {
+    /// The children of the component
+    pub children: Vec<ReactElement<TValue>>,
     props: HashMap<String, TValue>,
 }
 
-impl<'a, TValue> Props<'a, TValue> {
+impl<TValue> Props<TValue> {
     /// Gets a certain property from the properties list
     ///
     /// # Arguments

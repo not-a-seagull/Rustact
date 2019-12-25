@@ -25,7 +25,7 @@ before_script:
 
 script:
  - rustfmt --check src/lib.rs
- - cargo clippy -D
+ - cargo clippy
  - $RUST_BUILD build
  - $RUST_BUILD test
  - if [ "$RUST_BUILD" == "cargo" ]; then cargo doc --test; fi

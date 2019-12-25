@@ -1,5 +1,5 @@
 /*
- * src/element.rs
+ * src/component/macros.rs
  * Rustact - port of React to Rust
  *
  * Copyright (c) 2019, not_a_seagull
@@ -31,11 +31,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// represents a React element
+// macros for setup of components
+#[macro_export]
+macro_rules! component_fields {
+  ($val_type: expr) => {
+    props: Props<$val_type>; state: State<$val_type>;
+  }
+}
 
-use crate::Props;
+#[macro_export]
+macro_rules! component_methods {
+  ($val_type: expr) => {
+    fn get_props(&self) -> &Props<$val_type> {
+      self.props
+    }
 
-pub struct ReactElement<TValue> {
-    name: String,
-    props: Props<TValue>,
+    fn get_state(&self) => &State<$val_type> {
+      self.state
+    }
+  }
 }

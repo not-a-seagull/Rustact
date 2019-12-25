@@ -36,6 +36,7 @@
 extern crate thiserror;
 
 mod baseclasses;
+#[macro_use]
 mod component;
 mod element;
 mod error;
