@@ -34,9 +34,10 @@
 // macros for setup of components
 #[macro_export]
 macro_rules! component_fields {
-  ($val_type: expr) => {
-    props: Props<$val_type>; state: State<$val_type>;
-  }
+    ($val_type: expr) => {
+        props: Props<$val_type>;
+        state: State<$val_type>;
+    };
 }
 
 #[macro_export]
